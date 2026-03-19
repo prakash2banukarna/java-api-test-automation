@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>co.uk.api</groupId>
-    <artifactId>JAVA API</artifactId>
+    <artifactId>java-api-test-automation</artifactId>
     <version>2.1</version>
     <description>SDET API Automation Demo</description>
 
