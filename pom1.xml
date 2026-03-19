@@ -18,7 +18,7 @@
         <spring-boot.version>3.3.5</spring-boot.version>
         <junit.jupiter.version>6.0.1</junit.jupiter.version>
         <lombok.version>1.18.42</lombok.version>
-        <fasterxml.version>2.15.0</fasterxml.version>
+        <fasterxml.version>3.0.2</fasterxml.version>
         <restassured.version>5.5.5</restassured.version>
         <logger.version>1.5.19</logger.version>
         <awailtility.version>4.2.1</awailtility.version>
@@ -135,7 +135,7 @@
         <!-- JSON & AVRO LIBRARIES-->
         <!-- https://mvnrepository.com/artifact/tools.jackson.core/jackson-databind -->
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
+            <groupId>tools.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${fasterxml.version}</version>
         </dependency>

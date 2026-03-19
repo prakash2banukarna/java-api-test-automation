@@ -1,0 +1,243 @@
+{
+  "objects": [
+    {
+      "id": "7",
+      "name": "Apple MacBook Pro 16",
+      "data": {
+        "generation": null,
+        "price": 1849.91,
+        "capacity": null,
+        "screenSize": null,
+        "description": null,
+        "color": null,
+        "strapColour": null,
+        "caseSize": null,
+        "year": 2109,
+        "capacityGB": 0,
+        "cpumodel": "Intel Core i9",
+        "CPU model": "Intel Core i9",
+        "Hard disk size": "1 TB"
+      }
+    },
+    {
+      "id": "26d2",
+      "name": "Dell XPS 16",
+      "data": {
+        "year": 2028,
+        "price": 1299.99,
+        "CPU model": "Intel Core i7",
+        "Hard disk size": "512 GB"
+      }
+    },
+    {
+      "id": "82",
+      "name": "Dell XPS 16",
+      "data": {
+        "generation": null,
+        "price": 1299.99,
+        "capacity": null,
+        "screenSize": null,
+        "description": null,
+        "color": null,
+        "strapColour": null,
+        "caseSize": null,
+        "year": 2028,
+        "capacityGB": 0,
+        "cpumodel": "Intel Core i7",
+        "CPU model": "Intel Core i7",
+        "Hard disk size": "512 GB"
+      }
+    },
+    {
+      "id": "93",
+      "name": "Dell XPS 16",
+      "data": {
+        "generation": null,
+        "price": 1299.99,
+        "capacity": null,
+        "screenSize": null,
+        "description": null,
+        "color": null,
+        "strapColour": null,
+        "caseSize": null,
+        "year": 2028,
+        "capacityGB": 0,
+        "cpumodel": "Intel Core i7",
+        "CPU model": "Intel Core i7",
+        "Hard disk size": "512 GB"
+      }
+    },
+    {
+      "id": "28",
+      "name": "Dell XPS 16",
+      "data": {
+        "generation": null,
+        "price": 1299.99,
+        "capacity": null,
+        "screenSize": null,
+        "description": null,
+        "color": null,
+        "strapColour": null,
+        "caseSize": null,
+        "year": 2028,
+        "capacityGB": 0,
+        "cpumodel": "Intel Core i7",
+        "CPU model": "Intel Core i7",
+        "Hard disk size": "512 GB"
+      }
+    },
+    {
+      "id": "87",
+      "name": "Dell XPS 16",
+      "data": {
+        "generation": null,
+        "price": 1299.99,
+        "capacity": null,
+        "screenSize": null,
+        "description": null,
+        "color": null,
+        "strapColour": null,
+        "caseSize": null,
+        "year": 2028,
+        "capacityGB": 0,
+        "cpumodel": "Intel Core i7",
+        "CPU model": "Intel Core i7",
+        "Hard disk size": "512 GB"
+      }
+    },
+    {
+      "id": "55",
+      "name": "Dell XPS 16",
+      "data": {
+        "generation": null,
+        "price": 1299.99,
+        "capacity": null,
+        "screenSize": null,
+        "description": null,
+        "color": null,
+        "strapColour": null,
+        "caseSize": null,
+        "year": 2028,
+        "capacityGB": 0,
+        "cpumodel": "Intel Core i7",
+        "CPU model": "Intel Core i7",
+        "Hard disk size": "512 GB"
+      }
+    },
+    {
+      "id": "50",
+      "name": "Dell XPS 16",
+      "data": {
+        "generation": null,
+        "price": 1299.99,
+        "capacity": null,
+        "screenSize": null,
+        "description": null,
+        "color": null,
+        "strapColour": null,
+        "caseSize": null,
+        "year": 2028,
+        "capacityGB": 0,
+        "cpumodel": "Intel Core i7",
+        "CPU model": "Intel Core i7",
+        "Hard disk size": "512 GB"
+      }
+    },
+    {
+      "id": "9",
+      "name": "Dell XPS 16",
+      "data": {
+        "generation": null,
+        "price": 1299.99,
+        "capacity": null,
+        "screenSize": null,
+        "description": null,
+        "color": null,
+        "strapColour": null,
+        "caseSize": null,
+        "year": 2028,
+        "capacityGB": 0,
+        "cpumodel": "Intel Core i7",
+        "CPU model": "Intel Core i7",
+        "Hard disk size": "512 GB"
+      }
+    },
+    {
+      "id": "86",
+      "name": "Dell XPS 16 Pro",
+      "data": {
+        "generation": null,
+        "price": 1399.99,
+        "capacity": null,
+        "screenSize": null,
+        "description": null,
+        "color": null,
+        "strapColour": null,
+        "caseSize": null,
+        "year": 2028,
+        "capacityGB": 0,
+        "cpumodel": "Intel Core i7",
+        "CPU model": "Intel Core i7",
+        "Hard disk size": "512 GB"
+      }
+    },
+    {
+      "id": "17",
+      "name": "Dell XPS 16",
+      "data": {
+        "generation": null,
+        "price": 1299.99,
+        "capacity": null,
+        "screenSize": null,
+        "description": null,
+        "color": null,
+        "strapColour": null,
+        "caseSize": null,
+        "year": 2028,
+        "capacityGB": 0,
+        "cpumodel": "Intel Core i7",
+        "CPU model": "Intel Core i7",
+        "Hard disk size": "512 GB"
+      }
+    },
+    {
+      "id": "44",
+      "name": "Dell XPS 19",
+      "data": {
+        "generation": null,
+        "price": 1299.99,
+        "capacity": null,
+        "screenSize": null,
+        "description": null,
+        "color": null,
+        "strapColour": null,
+        "caseSize": null,
+        "year": 2028,
+        "capacityGB": 0,
+        "cpumodel": "Intel Core i9",
+        "CPU model": "Intel Core i9",
+        "Hard disk size": "256 GB"
+      }
+    },
+    {
+      "id": "38",
+      "name": "Dell XPS 19",
+      "data": {
+        "generation": null,
+        "price": 1299.99,
+        "capacity": null,
+        "screenSize": null,
+        "description": null,
+        "color": null,
+        "strapColour": null,
+        "caseSize": null,
+        "year": 2028,
+        "capacityGB": 0,
+        "cpumodel": "Intel Core i9",
+        "CPU model": "Intel Core i9",
+        "Hard disk size": "256 GB"
+      }
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

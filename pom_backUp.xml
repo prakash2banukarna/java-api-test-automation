@@ -7,8 +7,7 @@
     <artifactId>JAVA API</artifactId>
     <version>2.1</version>
     <description>SDET API Automation Demo</description>
-
-
+    
     <properties>
         <java.version>21</java.version>
         <cucumber.version>7.29.0</cucumber.version>
@@ -18,7 +17,7 @@
         <spring-boot.version>3.3.5</spring-boot.version>
         <junit.jupiter.version>6.0.1</junit.jupiter.version>
         <lombok.version>1.18.42</lombok.version>
-        <fasterxml.version>2.15.0</fasterxml.version>
+        <fasterxml.version>3.0.2</fasterxml.version>
         <restassured.version>5.5.5</restassured.version>
         <logger.version>1.5.19</logger.version>
         <awailtility.version>4.2.1</awailtility.version>
@@ -97,15 +96,12 @@
             <version>${lombok.version}</version>
         </dependency>
 
-
         <!-- LOGGING LIBRARIES-->
-        <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>${logger.version}</version>
         </dependency>
-
 
         <!-- API LIBRARIES-->
         <!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
@@ -121,21 +117,15 @@
             <version>5.10.0</version>
             <scope>test</scope>
         </dependency>
-        <!--KAFKA LIBRARIES-->
 
-        <!-- https://mvnrepository.com/artifact/org.bitbucket.b_c/jose4j -->
         <dependency>
             <groupId>org.bitbucket.b_c</groupId>
             <artifactId>jose4j</artifactId>
             <version>0.9.6</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.avro/avro -->
 
-
-        <!-- JSON & AVRO LIBRARIES-->
-        <!-- https://mvnrepository.com/artifact/tools.jackson.core/jackson-databind -->
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
+            <groupId>tools.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${fasterxml.version}</version>
         </dependency>

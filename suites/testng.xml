@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Java API Automation" verbose="0" parallel="tests" data-provider-thread-count="5">
+    <test thread-count="2" name="API Demo" verbose="0">
+        <classes>
+            <class name="e2e.runner.TestRunner"/>
+        </classes>
+    </test>
+</suite>
