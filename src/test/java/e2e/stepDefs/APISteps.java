@@ -12,6 +12,7 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
 
 @Slf4j
 public class APISteps {
@@ -82,6 +84,8 @@ public class APISteps {
                 .log().everything()
                 .contentType(ContentType.JSON).when()
                 .get("objects/" + id);
+
+        scenarioHelper.embedLog("GET request BODY: " + response.getBody().asString());
     }
 
 
@@ -132,6 +136,37 @@ public class APISteps {
                 .body(expected)
                 .when()
                 .put("objects/" + id);
+
+    }
+
+    //Patch request - Update only fields which needs to be updated
+    @When("a PATCH request is made to update product with id")
+    public void sendPatchRequestToUpdateProduct(DataTable tbl) {
+        Map<String, String> dataMap = tbl.asMaps().get(0);
+        String id = dataMap.get("id");
+        String price = dataMap.get("price");
+        //String name = dataMap.get("name");
+        scenarioHelper.embedLog("PATCH request initiated to update PARTIAL data  for id: " + id);
+
+        Data data = Data.builder()
+                .price(Float.parseFloat(price))
+                .build();
+
+        ResponseModelItem partialUpdatedBody = ResponseModelItem.builder()
+                .name(dataMap.get("name"))
+                .data(data)
+                .build();
+
+        scenarioHelper.embedLog("PATCH request body :" + partialUpdatedBody);
+
+        response = given().contentType(ContentType.JSON)
+                .baseUri(dbApiEndpoint)
+                .body(partialUpdatedBody)
+                .when()
+                .patch("objects/" + id);
+
+        scenarioHelper.embedLog("PATCH request response code  :" + response.statusCode());
+        scenarioHelper.embedLog("PATCH request response body  :" + response.getBody().asString());
 
     }
 
@@ -386,6 +421,68 @@ public class APISteps {
 
     }
 
+    //    --------------------------------  Additional Test -------------------
+
+    //From a Get request validate a field
+    @Given("a GET request is made to fetch product with id and validate the field and value")
+    public void sendGetRequestForProductByIdAndValidate(DataTable tbl) {
+        Map<String, String> dataMap = tbl.transpose().asMap();
+
+        String id = dataMap.get("id");
+        String field = dataMap.get("field"); //Field that we need to validate
+        String value = dataMap.get("value"); //value for the respective field
+
+        if (!id.equals("<id>")) {
+            id = dataMap.get("id");
+        } else {
+            id = idRandom;
+        }
+
+        given().header("x-api-key", dbApiKey)
+                .baseUri(dbApiEndpoint)
+                .log().everything()
+                .contentType(ContentType.JSON)
+                .when()
+                .get("objects/" + id)
+//                .then().body("name", equalTo("Apple MacBook Pro 17")).log().all();
+                .then().body(field, equalTo(value)).log().all();
+
+    }
+
+    //PostRequest that generates own id and get the body
+
+    @Given("a POST request is made to create a user")
+    public void postRequestSend() {
+        int id = given().baseUri("https://restful-booker.herokuapp.com").contentType(ContentType.JSON)
+                .body("""
+                        {
+                                             "firstname": "Prakash",
+                                             "lastname": "K Test",
+                                             "totalprice": 100,
+                                             "depositpaid": true,
+                                             "bookingdates": {
+                                                 "checkin": "2026-01-01",
+                                                 "checkout": "2026-01-10"
+                                             }
+                                         }
+                        """)
+                .when().post("/booking")
+                .then().
+                extract().path("bookingid"); // Your extract().path()
+
+
+        scenarioHelper.embedLog("Post request generated id " + id);
+
+//
+        Response res = given().baseUri("https://restful-booker.herokuapp.com")
+                .when()
+                .get("/booking/" + id);
+
+        scenarioHelper.embedLog("Get request status : " + res.statusCode());
+        scenarioHelper.embedLog("Get request body : " + res.getBody().prettyPrint());
+
+
+    }
 
 }
 

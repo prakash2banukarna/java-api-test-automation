@@ -6,6 +6,7 @@ import e2e.support.ScenarioHelper;
 import io.cucumber.java.*;
 import io.cucumber.spring.CucumberContextConfiguration;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Assumptions;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -101,6 +102,14 @@ public class Hooks {
             Duration duration = Duration.between(start, LocalDateTime.now());
             log.info("Step Completed - Duration: {} seconds", duration.toSeconds());
         }
+    }
+
+    // The below tagged test will be skipped and test wont fail
+    @Before("@KnownDefect")
+    public void skipKnownDefect(Scenario scenario) {
+        // log it but don't run
+        scenarioHelper.embedLog("️ Skipping known defect: " + scenario.getName());
+        Assumptions.assumeTrue(false, "Known defect - skipping");
     }
 
 

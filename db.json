@@ -2,21 +2,9 @@
   "objects": [
     {
       "id": "7",
-      "name": "Apple MacBook Pro 16",
+      "name": "Apple MacBook Pro 18",
       "data": {
-        "generation": null,
-        "price": 1849.91,
-        "capacity": null,
-        "screenSize": null,
-        "description": null,
-        "color": null,
-        "strapColour": null,
-        "caseSize": null,
-        "year": 2109,
-        "capacityGB": 0,
-        "cpumodel": "Intel Core i9",
-        "CPU model": "Intel Core i9",
-        "Hard disk size": "1 TB"
+        "price": 2131
       }
     },
     {

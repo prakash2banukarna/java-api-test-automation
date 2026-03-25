@@ -1,8 +1,11 @@
 package e2e.Database.models;
 
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+@JsonInclude(JsonInclude.Include.NON_DEFAULT) //   excludes nulls to be set
 @Getter
 @Setter
 @NoArgsConstructor
