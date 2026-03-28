@@ -6,7 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@PropertySource("classpath:env-dev.properties") // First read all the property file data
+//@PropertySource("classpath:env-dev.properties")
+@PropertySource("classpath:env-${env:dev}.properties") // First read all the property file data
 @ComponentScan({"e2e.support"})
 public class AppConfiguration {
 
