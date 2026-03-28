@@ -6,17 +6,18 @@ import io.cucumber.testng.CucumberOptions;
 import org.testng.annotations.DataProvider;
 
 @CucumberOptions(
-        glue={"e2e.stepDefs","e2e.hooks"},
+        glue = {"e2e.stepDefs", "e2e.hooks"},
         features = {"src/test/resources/features"},
         plugin = {"pretty",
-        "html:target/reports/cucumber.html"},
+                "html:target/reports/cucumber.html",
+                "rerun:rerun/failed_scenarios.txt"},
         monochrome = true)
 
 public class TestRunner extends AbstractTestNGCucumberTests {
 
     @DataProvider(parallel = true)
     @Override
-    public Object[][] scenarios(){
+    public Object[][] scenarios() {
         return super.scenarios();
     }
 

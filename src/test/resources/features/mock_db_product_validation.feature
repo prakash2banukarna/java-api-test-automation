@@ -1,4 +1,4 @@
-@ProductAPI
+@ProductAPIDemo
 Feature: Product API Validation
   Validate that the product API response data matches the mock database
 

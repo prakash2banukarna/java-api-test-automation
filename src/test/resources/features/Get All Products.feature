@@ -17,8 +17,9 @@ Feature: Product Management API
 
     Examples:
       | id | name                 | year | price   | cpuModel      | hardDiskSize |
-      | 7  | Apple MacBook Pro 16 | 2009 | 1908.98 | Intel Core i9 | 1 TB         |
-#      | 5  | Apple MacBook Pro 22 |2019|1849.98|Intel Core i9|1 TB|
+      | 7  | Apple MacBook Pro 16 | 2109 | 1849.91 | Intel Core i9 | 1 TB         |
+      | 82 | Dell XPS 16          | 2028 | 1299.99 | Intel Core i7 | 512 GB       |
+      | 44 | Dell XPS 19          | 2028 | 1299.99 | Intel Core i9 | 256 GB       |
 
   @PutRequest
   Scenario Outline: Ability to update a product
@@ -32,8 +33,9 @@ Feature: Product Management API
 
 
     Examples:
-      | id | name                 | year | price   | cpuModel      | hardDiskSize |
-      | 7  | Apple MacBook Pro 16 | 2109 | 1849.91 | Intel Core i9 | 1 TB         |
+      | id | name        | year | price   | cpuModel      | hardDiskSize |
+#      | 7  | Apple MacBook Pro 16 | 2109 | 1849.91 | Intel Core i9 | 1 TB         |
+      | 82 | Dell XPS 16 | 2028 | 1299.99 | Intel Core i7 | 512 GB       |
 
 
   @PostRequest
