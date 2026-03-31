@@ -16,6 +16,9 @@
         <surefire.version>3.5.5</surefire.version>
         <spring.version>6.1.14</spring.version>
         <spring-boot.version>3.3.5</spring-boot.version>
+        <spring.jpa.version>4.0.0</spring.jpa.version>
+        <postgresql.version>42.7.7</postgresql.version>
+        <hibernate.version>6.4.4.Final</hibernate.version>
         <junit.jupiter.version>6.0.1</junit.jupiter.version>
         <lombok.version>1.18.42</lombok.version>
         <fasterxml.version>2.15.0</fasterxml.version>
@@ -121,6 +124,32 @@
             <version>5.10.0</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- Spring JDBC Support -->
+        <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>${spring.jpa.version}</version>
+        </dependency>
+        <!-- ADD this — Spring ORM bridges Spring and Hibernate -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+        </dependency>
+        <!-- DB LIBRARIES-->
+        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+
         <!--KAFKA LIBRARIES-->
 
         <!-- https://mvnrepository.com/artifact/org.bitbucket.b_c/jose4j -->
