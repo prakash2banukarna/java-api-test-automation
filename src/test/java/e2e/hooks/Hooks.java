@@ -1,6 +1,7 @@
 package e2e.hooks;
 
 import e2e.config.AppConfiguration;
+import e2e.config.PostgresqlDBConfiguration;
 import e2e.stepDefs.APISteps;
 import e2e.support.ScenarioHelper;
 import io.cucumber.java.*;
@@ -28,7 +29,8 @@ import java.util.Map;
 @Slf4j
 @CucumberContextConfiguration
 @ContextHierarchy({
-        @ContextConfiguration(classes = AppConfiguration.class)
+        @ContextConfiguration(classes = AppConfiguration.class),
+        @ContextConfiguration(classes = PostgresqlDBConfiguration.class)
 })
 
 public class Hooks {

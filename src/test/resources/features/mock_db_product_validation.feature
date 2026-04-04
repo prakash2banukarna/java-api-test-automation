@@ -9,7 +9,7 @@ Feature: Product API Validation
 
   @ModelValidation
   Scenario: Validate all products from API match mock database records
-    Then I collect all existing product ids
+    Then I collect all existing products from api
     Then I validate mockDb product data with API response products
 
 

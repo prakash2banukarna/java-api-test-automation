@@ -3,6 +3,7 @@ package e2e.support;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import e2e.Database.models.ProductTable;
 import e2e.Database.models.ResponseModelItem;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Assertions;
@@ -94,6 +95,25 @@ public class Utils {
         compareValue("year", mockDbProduct.getData().getYear(), apiProduct.at("/data/year").asInt(), result);
         compareValue("CPU model", mockDbProduct.getData().getCPUModel(), apiProduct.at("/data/CPU model").asText(), result);
         compareValue("Hard disk size", mockDbProduct.getData().getHardDiskSize(), apiProduct.at("/data/Hard disk size").asText(), result);
+    }
+
+
+    /**
+     * Compares product data from the Postgresql database Product table against the actual API response.
+     * Each field is individually validated and any mismatches are collected into the
+     * mismatches list rather than failing immediately, allowing all discrepancies
+     * to be reported at once (soft assertion approach).
+     *
+     * @param productTable product record loaded from the Postgresql database Product table (source of truth)
+     * @param apiProduct   deserialized API response product
+     * @param result       list to collect field-level mismatch messages
+     */
+    public void compareProductTableDataWithApiData(ProductTable productTable, ResponseModelItem apiProduct, List<String> result) {
+        compareValue("name", productTable.getName(), apiProduct.getName(), result);
+        compareValue("price", productTable.getPrice(), apiProduct.getData().getPrice(), result);
+        compareValue("year", productTable.getYear(), apiProduct.getData().getYear(), result);
+        compareValue("CPU model", productTable.getCPUModel(), apiProduct.getData().getCPUModel(), result);
+        compareValue("Hard disk size", productTable.getHardDiskSize(), apiProduct.getData().getHardDiskSize(), result);
     }
 
 

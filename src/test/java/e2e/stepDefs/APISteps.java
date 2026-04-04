@@ -5,7 +5,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import e2e.Database.models.Data;
+import e2e.Database.models.ProductTable;
 import e2e.Database.models.ResponseModelItem;
+import e2e.Database.repository.ProductRepository;
 import e2e.support.ScenarioHelper;
 import e2e.support.Utils;
 import io.cucumber.datatable.DataTable;
@@ -32,6 +34,7 @@ public class APISteps {
     @Autowired
     private final Utils utils;
     private final ScenarioHelper scenarioHelper;
+    private final ProductRepository productRepository;
     List<JsonNode> jsonNode = new ArrayList<>();
 
 
@@ -50,9 +53,11 @@ public class APISteps {
     String dbApiKey;
 
 
-    public APISteps(Utils utils, ScenarioHelper scenarioHelper) {
+    public APISteps(Utils utils, ScenarioHelper scenarioHelper, ProductRepository productRepository) {
         this.utils = utils;
         this.scenarioHelper = scenarioHelper;
+        this.productRepository = productRepository;
+
     }
 
     public List<ResponseModelItem> productList;
@@ -135,7 +140,7 @@ public class APISteps {
 
     }
 
-    @Then("I collect all existing product ids")
+    @Then("I collect all existing products from api")
     @Then("I collect all existing product ids to generate a unique one")
     public void extractAllProductIdsFromResponse() {
         productList = Arrays.asList(response.getBody().as(ResponseModelItem[].class));
@@ -330,13 +335,13 @@ public class APISteps {
 
     @Then("I validate mockDb product data with API response products")
     public void iValidateDbWithApi() {
-        Map<String, ResponseModelItem> dbProducts = dbAPIdata.stream().collect(Collectors.toMap(ResponseModelItem::getId, Function.identity()));
+        Map<String, ResponseModelItem> mockdbProducts = dbAPIdata.stream().collect(Collectors.toMap(ResponseModelItem::getId, Function.identity()));
 
         Map<String, ResponseModelItem> apiProducts = productList.stream().collect(Collectors.toMap(ResponseModelItem::getId, Function.identity()));
 
         Map<String, List<String>> finalComparison = new HashMap<>();
 //        for(Map.Entry<String, ResponseModelItem> dbProductsSourceData : dbProducts.entrySet()){
-        for (var dbProductsSourceData : dbProducts.entrySet()) {
+        for (var dbProductsSourceData : mockdbProducts.entrySet()) {
             String dbProductIdSource = dbProductsSourceData.getKey();
             ResponseModelItem dataFromApi = apiProducts.get(dbProductIdSource);
 
@@ -358,7 +363,7 @@ public class APISteps {
 
     @Then("I validate each product's data against the mock database using JsonPath expressions")
     public void validateEachProductAgainstMockDatabaseUsingJsonPath() {
-        Map<String, ResponseModelItem> dbProducts = dbAPIdata.stream().collect(Collectors.toMap(ResponseModelItem::getId, Function.identity()));
+        Map<String, ResponseModelItem> mockdbProducts = dbAPIdata.stream().collect(Collectors.toMap(ResponseModelItem::getId, Function.identity()));
         Map<String, JsonNode> apiProductsStoredInJson = jsonNode.stream()
                 .collect(Collectors.toMap(
                         message -> message.at("/id").asText(),
@@ -366,7 +371,7 @@ public class APISteps {
                 ));
 
         Map<String, List<String>> finalComparison = new HashMap<>();
-        for (var dbProductsSourceData : dbProducts.entrySet()) {
+        for (var dbProductsSourceData : mockdbProducts.entrySet()) {
             String dbProductIdSource = dbProductsSourceData.getKey();
             JsonNode dataFromApi = apiProductsStoredInJson.get(dbProductIdSource);
 
@@ -383,6 +388,50 @@ public class APISteps {
 
         scenarioHelper.assertComparisonResult(finalComparison, "One or more products from the mock database do not match the API response");
 
+
+    }
+
+
+    @Given("I collect all products from product table")
+    public void fetchProductTableData() {
+
+        Map<String, ProductTable> productTableData = productRepository.findAll().stream().collect(Collectors.toMap(ProductTable::getId, Function.identity()));
+        log.info("Postgresql - {} Product Table count", productTableData.size());
+        scenarioHelper.embedLog("Product Table count: " + productTableData.size());
+
+    }
+
+    /**
+     * Validates product data between the PostgreSQL Product table and the API response.
+     * The Product table acts as the source of truth — each product record from the
+     * database is compared field-by-field against the corresponding API response product.
+     * Mismatches are collected using a soft assertion approach and reported all at once.
+     */
+    @And("I validate product data between API and Product table")
+    public void validateProductDataBetweenApiAndProductTable() {
+        Map<String, ResponseModelItem> apiProducts = productList.stream().collect(Collectors.toMap(ResponseModelItem::getId, Function.identity()));
+
+        //Acting as source of truth
+        Map<String, ProductTable> productTableData = productRepository.findAll().stream().collect(Collectors.toMap(ProductTable::getId, Function.identity()));
+
+        Map<String, List<String>> finalComparison = new HashMap<>();
+//        for(Map.Entry<String, ResponseModelItem> dbProductsSourceData : dbProducts.entrySet()){
+        for (var dbProductsSourceData : productTableData.entrySet()) {
+            String dbProductIdSource = dbProductsSourceData.getKey();
+            ResponseModelItem dataFromApi = apiProducts.get(dbProductIdSource);
+
+            if (dataFromApi == null) {
+                finalComparison.put(dbProductIdSource, List.of("Product found in postgresql DB Product table but missing in API response"));
+            } else {
+                List<String> results = new ArrayList<>();
+                utils.compareProductTableDataWithApiData(dbProductsSourceData.getValue(), dataFromApi, results);
+                if (!results.isEmpty()) {
+                    finalComparison.put(dbProductIdSource, results);
+                }
+            }
+        }
+
+        scenarioHelper.assertComparisonResult(finalComparison, "One or more products from the Postgresql database product table do not match the API response");
 
     }
 
