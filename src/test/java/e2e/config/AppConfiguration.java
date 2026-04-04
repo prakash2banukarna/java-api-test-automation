@@ -17,5 +17,20 @@ public class AppConfiguration {
     @Value("${operation}")
     private String operation;
 
+    // new DB config
+    @Value("${DB_URL}")
+    private String dbUrl;
+
+    @Value("${DB_USERNAME}")
+    private String dbUsername;
+
+    @Value("${DB_PASSWORD}")
+    private String dbPassword;
+
+    /**
+     * Creates PostgreSQL connection.
+     * Spring manages this as a singleton bean.
+     */
+
 
 }
