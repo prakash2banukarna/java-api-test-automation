@@ -8,7 +8,18 @@ import org.springframework.context.annotation.PropertySource;
 @Configuration
 //@PropertySource("classpath:env-dev.properties")
 @PropertySource("classpath:env-${env:dev}.properties") // First read all the property file data
-@ComponentScan({"e2e.support"})
+//@ComponentScan({
+//        "e2e.support",
+////        "e2e.Database",
+//        "e2e.Database.uiModels"
+//})
+
+@ComponentScan(basePackages = {
+        "e2e.Database.uiModels",
+        "e2e.stepDefs",
+        "e2e.hooks",
+        "e2e.support"
+})
 public class AppConfiguration {
 
     @Value("${userName}")
@@ -26,11 +37,6 @@ public class AppConfiguration {
 
     @Value("${DB_PASSWORD}")
     private String dbPassword;
-
-    /**
-     * Creates PostgreSQL connection.
-     * Spring manages this as a singleton bean.
-     */
 
 
 }

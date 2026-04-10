@@ -2,6 +2,7 @@ package e2e.hooks;
 
 import e2e.config.AppConfiguration;
 import e2e.config.PostgresqlDBConfiguration;
+import e2e.config.WebDriverConfig;
 import e2e.stepDefs.APISteps;
 import e2e.support.ScenarioHelper;
 import io.cucumber.java.*;
@@ -11,7 +12,6 @@ import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.ContextHierarchy;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -28,9 +28,15 @@ import java.util.Map;
  */
 @Slf4j
 @CucumberContextConfiguration
-@ContextHierarchy({
-        @ContextConfiguration(classes = AppConfiguration.class),
-        @ContextConfiguration(classes = PostgresqlDBConfiguration.class)
+//@ContextHierarchy({
+//        @ContextConfiguration(classes = AppConfiguration.class),
+//        @ContextConfiguration(classes = PostgresqlDBConfiguration.class),
+//        @ContextConfiguration(classes = WebDriverConfig.class)
+//})
+@ContextConfiguration(classes = {
+        AppConfiguration.class,
+        PostgresqlDBConfiguration.class,
+        WebDriverConfig.class
 })
 
 public class Hooks {
