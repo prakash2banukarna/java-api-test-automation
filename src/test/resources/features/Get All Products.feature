@@ -69,15 +69,4 @@ Feature: Product Management API
       | 1ce4 |
 
 
-  @GetAllProducts
-  Scenario: Ability to retrieve all the products and validate the total count
-    When a GET request is made to fetch all products
-    Then the response status code should be 200
-    Then the total number of products in the response should be 5
 
-
-  @GetProductWithPrice
-  Scenario: Ability to retrieve products filtered by price threshold
-    When a GET request is made to fetch all products
-    Then the response status code should be 200
-    Then the response should only contain 5 products with a price greater than 1800

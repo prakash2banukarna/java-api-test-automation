@@ -173,7 +173,7 @@
             <artifactId>selenium-java</artifactId>
             <version>${selenium.version}</version>
         </dependency>
-        
+
         <!-- WebDriverManager — auto downloads correct driver binary -->
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
