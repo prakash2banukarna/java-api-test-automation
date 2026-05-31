@@ -1,0 +1,22 @@
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date %-5level %logger{0}:%line [%X{scenario}] - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <logger name="e2e" level="info"/>
+    <logger name="org.apache.kafka" level="error"/>
+    <logger name="io.github.bonigarcia" level="ERROR"/>
+    <logger name="org.springframework" level="ERROR"/>
+    <logger name="org.hibernate" level="ERROR"/>
+    <logger name="com.zaxxer.hikari" level="ERROR"/>
+    <logger name="io.netty" level="ERROR"/>
+    <logger name="org.openqa.selenium" level="ERROR"/>
+
+    <!--    <logger name="org.hibernate.SQL" level="debug"/>-->
+
+    <root level="error">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>

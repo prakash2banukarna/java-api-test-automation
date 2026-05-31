@@ -268,25 +268,6 @@ public class APISteps {
 
     }
 
-    @Then("the response should only contain {int} products with a price greater than {float}")
-    public void filterProductOnPrice(int productCount, float price) {
-
-
-        productList = Arrays.asList(response.getBody().as(ResponseModelItem[].class));
-        Map<String, ResponseModelItem> productsWithHighPrice = productList.stream().filter(message -> message.getData().getPrice() >= price)
-                .collect(Collectors.toMap(ResponseModelItem::getId, Function.identity()));
-
-        Assertions.assertEquals(productCount, productsWithHighPrice.size(), "Add the log");
-
-    }
-
-    //
-    @Then("the total number of products in the response should be {int}")
-    public void theResponseShouldContain(int expectedCount) {
-        productList = Arrays.asList(response.getBody().as(ResponseModelItem[].class));
-        Assertions.assertEquals(productList.size(), expectedCount,
-                "Expected " + expectedCount + " products but got " + productList.size());
-    }
 
     @Then("the response body should match the expected product details")
     public void verifyResponseBodyMatchesExpectedProductDetails(DataTable tbl) {
@@ -333,65 +314,64 @@ public class APISteps {
 
     }
 
-    @Then("I validate mockDb product data with API response products")
-    public void iValidateDbWithApi() {
-        Map<String, ResponseModelItem> mockdbProducts = dbAPIdata.stream().collect(Collectors.toMap(ResponseModelItem::getId, Function.identity()));
+//    @Then("I validate mockDb product data with API response products")
+//    public void iValidateDbWithApi() {
+//        Map<String, ResponseModelItem> mockdbProducts = dbAPIdata.stream().collect(Collectors.toMap(ResponseModelItem::getId, Function.identity()));
+//
+//        Map<String, ResponseModelItem> apiProducts = productList.stream().collect(Collectors.toMap(ResponseModelItem::getId, Function.identity()));
+//
+//        Map<String, List<String>> finalComparison = new HashMap<>();
 
-        Map<String, ResponseModelItem> apiProducts = productList.stream().collect(Collectors.toMap(ResponseModelItem::getId, Function.identity()));
+    /// /        for(Map.Entry<String, ResponseModelItem> dbProductsSourceData : dbProducts.entrySet()){
+//        for (var dbProductsSourceData : mockdbProducts.entrySet()) {
+//            String dbProductIdSource = dbProductsSourceData.getKey();
+//            ResponseModelItem dataFromApi = apiProducts.get(dbProductIdSource);
+//
+//            if (dataFromApi == null) {
+//                finalComparison.put(dbProductIdSource, List.of("Product found in mock DB but missing in API response"));
+//            } else {
+//                List<String> results = new ArrayList<>();
+//                utils.compareDbDataWithApiData(dbProductsSourceData.getValue(), dataFromApi, results);
+//                if (!results.isEmpty()) {
+//                    finalComparison.put(dbProductIdSource, results);
+//                }
+//            }
+//        }
+//
+//        scenarioHelper.assertComparisonResult(finalComparison, "One or more products from the mock database do not match the API response");
+//
+//
+//    }
 
-        Map<String, List<String>> finalComparison = new HashMap<>();
-//        for(Map.Entry<String, ResponseModelItem> dbProductsSourceData : dbProducts.entrySet()){
-        for (var dbProductsSourceData : mockdbProducts.entrySet()) {
-            String dbProductIdSource = dbProductsSourceData.getKey();
-            ResponseModelItem dataFromApi = apiProducts.get(dbProductIdSource);
-
-            if (dataFromApi == null) {
-                finalComparison.put(dbProductIdSource, List.of("Product found in mock DB but missing in API response"));
-            } else {
-                List<String> results = new ArrayList<>();
-                utils.compareDbDataWithApiData(dbProductsSourceData.getValue(), dataFromApi, results);
-                if (!results.isEmpty()) {
-                    finalComparison.put(dbProductIdSource, results);
-                }
-            }
-        }
-
-        scenarioHelper.assertComparisonResult(finalComparison, "One or more products from the mock database do not match the API response");
-
-
-    }
-
-    @Then("I validate each product's data against the mock database using JsonPath expressions")
-    public void validateEachProductAgainstMockDatabaseUsingJsonPath() {
-        Map<String, ResponseModelItem> mockdbProducts = dbAPIdata.stream().collect(Collectors.toMap(ResponseModelItem::getId, Function.identity()));
-        Map<String, JsonNode> apiProductsStoredInJson = jsonNode.stream()
-                .collect(Collectors.toMap(
-                        message -> message.at("/id").asText(),
-                        Function.identity()
-                ));
-
-        Map<String, List<String>> finalComparison = new HashMap<>();
-        for (var dbProductsSourceData : mockdbProducts.entrySet()) {
-            String dbProductIdSource = dbProductsSourceData.getKey();
-            JsonNode dataFromApi = apiProductsStoredInJson.get(dbProductIdSource);
-
-            if (dataFromApi == null) {
-                finalComparison.put(dbProductIdSource, List.of("Product found in mock DB but missing in API response"));
-            } else {
-                List<String> results = new ArrayList<>();
-                utils.compareDbDataWithApiDataUsingJsonPath(dbProductsSourceData.getValue(), dataFromApi, results);
-                if (!results.isEmpty()) {
-                    finalComparison.put(dbProductIdSource, results);
-                }
-            }
-        }
-
-        scenarioHelper.assertComparisonResult(finalComparison, "One or more products from the mock database do not match the API response");
-
-
-    }
-
-
+//    @Then("I validate each product's data against the mock database using JsonPath expressions")
+//    public void validateEachProductAgainstMockDatabaseUsingJsonPath() {
+//        Map<String, ResponseModelItem> mockdbProducts = dbAPIdata.stream().collect(Collectors.toMap(ResponseModelItem::getId, Function.identity()));
+//        Map<String, JsonNode> apiProductsStoredInJson = jsonNode.stream()
+//                .collect(Collectors.toMap(
+//                        message -> message.at("/id").asText(),
+//                        Function.identity()
+//                ));
+//
+//        Map<String, List<String>> finalComparison = new HashMap<>();
+//        for (var dbProductsSourceData : mockdbProducts.entrySet()) {
+//            String dbProductIdSource = dbProductsSourceData.getKey();
+//            JsonNode dataFromApi = apiProductsStoredInJson.get(dbProductIdSource);
+//
+//            if (dataFromApi == null) {
+//                finalComparison.put(dbProductIdSource, List.of("Product found in mock DB but missing in API response"));
+//            } else {
+//                List<String> results = new ArrayList<>();
+//                utils.compareDbDataWithApiDataUsingJsonPath(dbProductsSourceData.getValue(), dataFromApi, results);
+//                if (!results.isEmpty()) {
+//                    finalComparison.put(dbProductIdSource, results);
+//                }
+//            }
+//        }
+//
+//        scenarioHelper.assertComparisonResult(finalComparison, "One or more products from the mock database do not match the API response");
+//
+//
+//    }
     @Given("I collect all products from product table")
     public void fetchProductTableData() {
 

@@ -1,1 +1,1 @@
-file:src/test/resources/features/Product%20Table%20Validation.feature:7
+file:src/test/resources/features/Inventory.feature:29

@@ -22,6 +22,7 @@
         <junit.jupiter.version>6.0.1</junit.jupiter.version>
         <lombok.version>1.18.42</lombok.version>
         <fasterxml.version>2.15.0</fasterxml.version>
+        <selenium.version>4.8.0</selenium.version>
         <restassured.version>5.5.5</restassured.version>
         <logger.version>1.5.19</logger.version>
         <awailtility.version>4.2.1</awailtility.version>
@@ -166,6 +167,20 @@
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.avro/avro -->
 
+        <!--Selenium-->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium.version}</version>
+        </dependency>
+
+        <!-- WebDriverManager — auto downloads correct driver binary -->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>5.7.0</version>
+        </dependency>
+
 
         <!-- JSON & AVRO LIBRARIES-->
         <!-- https://mvnrepository.com/artifact/tools.jackson.core/jackson-databind -->
@@ -249,6 +264,13 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>--sun-misc-unsafe-memory-access=allow</argLine>
+                </configuration>
             </plugin>
         </plugins>
     </build>

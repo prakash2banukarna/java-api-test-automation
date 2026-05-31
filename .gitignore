@@ -12,7 +12,8 @@ target/
 apache-maven-3.9.14/
 
 # Environment / Secrets
-
+src/test/resources/env-*.properties
+.DS_Store
 # BlueJ files
 *.ctxt
 

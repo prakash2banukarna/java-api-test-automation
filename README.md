@@ -344,12 +344,6 @@ mvn test
 ### Run by tag
 
 ```bash
-# Mock DB — model-based validation
-mvn test -Dcucumber.filter.tags="@ModelValidation"
-
-# Mock DB — JsonPath validation
-mvn test -Dcucumber.filter.tags="@JsonPathValidation"
-
 # PostgreSQL table validation
 mvn test -Dcucumber.filter.tags="@ProductTableValidation"
 
@@ -374,12 +368,6 @@ target/reports/cucumber.html
 ## Example Scenarios
 
 ```gherkin
-@ModelValidation
-Scenario: Validate all products from API match mock database records
-Given I load all products from the mock database
-When a GET request is made to fetch all products
-Then I collect all existing product ids
-Then I validate each product's data against the mock database using model mapping
 
 @ProductTableValidation
 Scenario: Validate all products from API match PostgreSQL Product table records

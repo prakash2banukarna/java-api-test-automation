@@ -5,6 +5,7 @@
         <classes>
             <class name="e2e.runner.TestRunner"/>
             <!--            <class name="e2e.runner.testRunnerRerun"/>-->
+            
         </classes>
     </test>
 </suite>

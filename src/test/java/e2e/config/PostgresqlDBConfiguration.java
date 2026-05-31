@@ -75,12 +75,6 @@ public class PostgresqlDBConfiguration {
         HikariConfig config = new HikariConfig();
 
         // Database connection settings
-// config.setJdbcUrl(sssDBSecrets.get("dbUrl"));
-// config.setUsername(sssDBSecrets.get("username"));
-// config.setPassword(sssDBSecrets.get("password"));
-// config.setDriverClassName("org.postgresql.Driver");
-
-
         config.setJdbcUrl(dbUrl);
         config.setUsername(dbUsername);
         config.setPassword(dbPassword);
