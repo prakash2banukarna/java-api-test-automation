@@ -14,8 +14,12 @@ public class HomePage extends BasePage {
     @Value("${application.url}")
     private String baseURL;
 
+//    @FindBy(how = How.ID, using = "login-button")
+//    public WebElement loginButton;
+
     @FindBy(how = How.ID, using = "login-button")
     public WebElement loginButton;
+
 
     public HomePage goToHomePage() {
         driver.get(baseURL);

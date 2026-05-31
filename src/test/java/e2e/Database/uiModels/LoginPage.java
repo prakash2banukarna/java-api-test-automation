@@ -1,6 +1,5 @@
 package e2e.Database.uiModels;
 
-import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,13 +12,18 @@ import org.springframework.stereotype.Component;
 public class LoginPage extends BasePage {
 
     // SauceDemo locators
-    @FindBy(how = How.ID, using = "user-name")
+//    @FindBy(how = How.ID, using = "user-name")
+//    public WebElement usernameField;
+
+    @FindBy(how = How.XPATH, using = "//input[@data-test='username']")
     public WebElement usernameField;
+
 
     @FindBy(how = How.ID, using = "password")
     public WebElement passwordField;
 
-    By loginButtonBy = By.id("login-button");
+    //    By loginButtonBy = By.id("login-button");
+    By loginButtonBy = By.cssSelector(".submit-button");
 
     By errorMessageBy = By.cssSelector("[data-test='error']");
 
@@ -30,13 +34,6 @@ public class LoginPage extends BasePage {
         return this;
     }
 
-    public LoginPage verifyErrorMessage(String expectedText) {
-        String actualText = readText(errorMessageBy);
-        Assertions.assertTrue(actualText.contains(expectedText),
-                "Error message mismatch — Expected: " + expectedText
-                        + " Actual: " + actualText);
-        return this;
-    }
 
     /**
      * Returns the error message text displayed on failed login.
@@ -45,7 +42,7 @@ public class LoginPage extends BasePage {
     public String getErrorMessage() {
         return readText(errorMessageBy);
     }
-    
+
 
     @Override
     public boolean isAt() {

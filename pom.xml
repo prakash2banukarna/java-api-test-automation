@@ -265,6 +265,13 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>--sun-misc-unsafe-memory-access=allow</argLine>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <profiles>

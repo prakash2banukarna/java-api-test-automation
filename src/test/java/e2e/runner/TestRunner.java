@@ -15,6 +15,14 @@ import org.testng.annotations.DataProvider;
 
 public class TestRunner extends AbstractTestNGCucumberTests {
 
+    //@BeforeTest method to read the TestNG parameter and set it as a system property: - To enable parallel cross browser testing
+
+//    @BeforeTest
+//    @Parameters("browser")
+//    public void setBrowser(String browser) {
+//        System.setProperty("browser", browser);
+//    }
+
     @DataProvider(parallel = true)
     @Override
     public Object[][] scenarios() {

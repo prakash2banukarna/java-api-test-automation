@@ -7,6 +7,8 @@ import org.openqa.selenium.support.How;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * Page Object for SauceDemo inventory page.
  * Represents the product listing page shown after successful login.
@@ -20,7 +22,16 @@ public class InventoryPage extends BasePage {
     private WebElement pageTitle;
 
     @FindBy(how = How.CLASS_NAME, using = "inventory_item")
-    private java.util.List<WebElement> productItems;
+    private List<WebElement> productItems;
+
+    @FindBy(how = How.CSS, using = ".product_sort_container")
+    private WebElement selectProductView;
+
+    @FindBy(how = How.CSS, using = ".inventory_item_price")
+    private WebElement itemPrice;
+
+    @FindBy(how = How.XPATH, using = "//div[@data-test='inventory-item-name']")
+    private WebElement productName;
 
     /**
      * Returns the page title text — "Products" on successful login.
@@ -54,6 +65,21 @@ public class InventoryPage extends BasePage {
         log.info("Product count on inventory page: {}", count);
         return count;
     }
+
+    public InventoryPage sortProducts(String selectMyProductView) {
+        selectByText(selectProductView, selectMyProductView);
+        return this;
+
+    }
+
+    public String itemPrice() {
+        return readText(itemPrice);
+    }
+
+    public String productName() {
+        return readText(productName);
+    }
+
 
     @Override
     public boolean isAt() {
