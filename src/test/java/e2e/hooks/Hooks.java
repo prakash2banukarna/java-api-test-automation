@@ -8,11 +8,19 @@ import e2e.support.ScenarioHelper;
 import io.cucumber.java.*;
 import io.cucumber.spring.CucumberContextConfiguration;
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -42,12 +50,24 @@ import java.util.Map;
 public class Hooks {
     private final Map<String, LocalDateTime> scenarioStartTimes = new HashMap<>();
     private final Map<String, String> stepStartTimes = new HashMap<>();
+    private int stepCounter = 1;
 
     @Autowired
     ScenarioHelper scenarioHelper;
     @Autowired(required = false)
     @Lazy
     APISteps apiSteps;
+
+    @Autowired(required = false)
+    @Lazy
+    private TakesScreenshot takesScreenshot;
+
+    @Autowired(required = false)
+    @Lazy
+    private WebDriver driver;
+
+    @Value("${screenshot.mode:failed}")  // defaults to failed if not set
+    private String screenshotMode;
 
 
     @BeforeAll
@@ -72,6 +92,7 @@ public class Hooks {
 
     @Before
     public void before_scenario(Scenario scenario) {
+        stepCounter = 1;
         String scenarioName = scenario.getName();
         scenarioStartTimes.put(scenarioName, LocalDateTime.now());
 
@@ -100,8 +121,55 @@ public class Hooks {
         return scenario.getId() + "_" + scenario.getLine();
     }
 
+    // Scenario names can have spaces and special characters — not valid in file paths
+    private String sanitize(String name) {
+        return name.replaceAll("[^a-zA-Z0-9]", "_").toLowerCase();
+    }
+
+//    @AfterStep
+//    public void afterStep(Scenario scenario) {
+//        String stepId = getStepId(scenario);
+//        String startTime = stepStartTimes.remove(stepId);
+//        if (startTime != null) {
+//            LocalDateTime start = LocalDateTime.parse(startTime);
+//            Duration duration = Duration.between(start, LocalDateTime.now());
+//            log.info("Step Completed - Duration: {} seconds", duration.toSeconds());
+//        }
+//    }
+
+    /**
+     * // As bytes — embed in Cucumber report
+     * byte[] bytes = driver.getScreenshotAs(OutputType.BYTES);
+     * <p>
+     * // As Base64 string — useful for logging
+     * String base64 = driver.getScreenshotAs(OutputType.BASE64);
+     * <p>
+     * // As file — save to disk
+     * File file = driver.getScreenshotAs(OutputType.FILE);
+     * FileUtils.copyFile(file, new File("screenshots/failure.png"));
+     */
+    @After
+    public void afterScenario(Scenario scenario) {
+        if (scenario.isFailed() && takesScreenshot != null) {
+            try {
+                byte[] screenshot = takesScreenshot.getScreenshotAs(OutputType.BYTES);
+                scenario.attach(screenshot, "image/png", "Screenshot on failure");
+                log.info("Screenshot captured for failed scenario: {}", scenario.getName());
+            } catch (Exception e) {
+                log.error("Failed to capture screenshot: {}", e.getMessage());
+            }
+        }
+
+        if (driver != null) {
+            driver.quit();
+        }
+    }
+
+    //Taking screenshot irrespective of pass or fail
     @AfterStep
     public void afterStep(Scenario scenario) {
+
+        // Existing duration logging
         String stepId = getStepId(scenario);
         String startTime = stepStartTimes.remove(stepId);
         if (startTime != null) {
@@ -109,7 +177,38 @@ public class Hooks {
             Duration duration = Duration.between(start, LocalDateTime.now());
             log.info("Step Completed - Duration: {} seconds", duration.toSeconds());
         }
-    }
 
+        // Screenshot control
+        boolean shouldCapture = switch (screenshotMode.toLowerCase()) {
+            case "all" -> true;                    // always capture
+            case "failed" -> scenario.isFailed();     // only on failure
+            default -> scenario.isFailed();     // default to failed
+        };
+
+        if (shouldCapture && takesScreenshot != null) {
+            try {
+                String folderPath = "target/screenshots/" + sanitize(scenario.getName());
+                Files.createDirectories(Paths.get(folderPath));
+
+                String status = scenario.isFailed() ? "FAILED" : "PASSED";
+                String fileName = folderPath + "/" + stepCounter + "_" + status + ".png";
+
+                // Save to file
+                File screenshot = takesScreenshot.getScreenshotAs(OutputType.FILE);
+                Files.copy(screenshot.toPath(), Paths.get(fileName),
+                        StandardCopyOption.REPLACE_EXISTING);
+
+                // Attach to HTML report
+                byte[] screenshotBytes = takesScreenshot.getScreenshotAs(OutputType.BYTES);
+                scenario.attach(screenshotBytes, "image/png",
+                        "Step " + stepCounter + " — " + status);
+
+                stepCounter++;
+
+            } catch (Exception e) {
+                log.error("Failed to capture step screenshot: {}", e.getMessage());
+            }
+        }
+    }
 
 }

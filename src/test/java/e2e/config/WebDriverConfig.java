@@ -3,6 +3,7 @@ package e2e.config;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Proxy;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -29,6 +30,12 @@ public class WebDriverConfig {
 
     @Value("${headless:false}")
     private boolean headless;
+
+    @Bean
+    @Scope("cucumber-glue")
+    public TakesScreenshot takesScreenshot(WebDriver webDriver) {
+        return (TakesScreenshot) webDriver;
+    }
 
     /**
      * Creates WebDriver bean based on browser property.
